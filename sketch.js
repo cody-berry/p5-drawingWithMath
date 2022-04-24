@@ -26,11 +26,11 @@ function setup() {
         [1,2,3,4,5] → no function
         z → freeze sketch</pre>`)
 
-    translate(width/2, 3*height/4)
-    drawMxNgrid(4, 8, 20)
+    drawArrowScene(20)
 
     noLoop()
 }
+
 
 // s is the side length of the squares, m is how many squares to the right
 // we will draw, n is how many squares to the top we will draw
@@ -44,6 +44,51 @@ function drawMxNgrid(m, n, s) {
         line(0, -j*s, m*s, -j*s)
     }
 }
+
+
+// shows the grid and the return symbol, the whole scene
+function drawArrowScene(s) {
+    translate(width / 2, 3 * height / 4)
+    drawMxNgrid(4, 8, s)
+    drawReturn(s*4, s*8, 3*s/4)
+}
+
+
+// draws the return symbol
+// r is the number of pixels wide the equilateral triangle is
+function drawReturn(w, h, r) {
+    // the top right corner of the arrow
+    let TR = new p5.Vector(3*w/4, -7*h/8)
+
+    // the bottom right corner of the arrow
+    let BR = new p5.Vector(3*w/4, -h/4)
+
+    // the bottom left corner of the arrow, also the triangle tip
+    let BL = new p5.Vector(w/4, -h/4)
+
+    // our line
+    stroke(0, 0, 50)
+    strokeWeight(6)
+    strokeJoin(ROUND)
+    noFill()
+    beginShape()
+    vertex(TR.x, TR.y)
+    vertex(BR.x, BR.y)
+    vertex(BL.x+10, BL.y) // move the bottom-left vertex right so that it
+    // doesn't show up when we draw our triangle
+    endShape()
+
+    // our triangle
+    strokeWeight(3)
+    fill(0, 0, 50)
+    triangle(BL.x, BL.y, BL.x + r, BL.y + sqrt(3)*r/3, BL.x + r, BL.y - sqrt(3)*r/3)
+
+    // make a red dot at the origin
+    stroke(0, 100, 100)
+    strokeWeight(10)
+    point(0, 0)
+}
+
 
 function draw() {
 }
